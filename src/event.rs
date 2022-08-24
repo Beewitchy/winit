@@ -272,7 +272,7 @@ pub enum WindowEvent {
     CursorLeft { device_id: DeviceId },
 
     /// A mouse wheel movement or touchpad scroll occurred.
-    MouseWheel { device_id: DeviceId, delta: MouseScrollDelta, phase: TouchPhase },
+    MouseWheel { device_id: DeviceId, delta: MouseScrollDelta, phase: TouchPhase, momentum_phase: MomentumPhase },
 
     /// An mouse button press has been received.
     MouseInput { device_id: DeviceId, state: ElementState, button: MouseButton },
@@ -976,6 +976,16 @@ pub enum MouseScrollDelta {
     /// this means moving your fingers right and down should give positive values,
     /// and move the content right and down (to reveal more things left and up).
     PixelDelta(PhysicalPosition<f64>),
+}
+
+/// Describes the momentum phase for touch-based scrolling.
+#[derive(Debug, Hash, PartialEq, Eq, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+pub enum MomentumPhase {
+    None,
+    Started,
+    Moved,
+    Ended,
 }
 
 /// Handle to synchronously change the size of the window from the
