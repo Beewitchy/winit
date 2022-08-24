@@ -1644,6 +1644,7 @@ unsafe fn public_window_callback_inner(
 
         WM_MOUSEWHEEL => {
             use crate::event::MouseScrollDelta::LineDelta;
+            use crate::event::MomentumPhase;
 
             let value = (wparam >> 16) as i16;
             let value = value as f32 / WHEEL_DELTA as f32;
@@ -1656,6 +1657,7 @@ unsafe fn public_window_callback_inner(
                     device_id: DEVICE_ID,
                     delta: LineDelta(0.0, value),
                     phase: TouchPhase::Moved,
+                    momentum_phase: MomentumPhase::None
                 },
             });
 
@@ -1664,6 +1666,7 @@ unsafe fn public_window_callback_inner(
 
         WM_MOUSEHWHEEL => {
             use crate::event::MouseScrollDelta::LineDelta;
+            use crate::event::MomentumPhase;
 
             let value = (wparam >> 16) as i16;
             let value = -value as f32 / WHEEL_DELTA as f32; // NOTE: inverted! See https://github.com/rust-windowing/winit/pull/2105/
@@ -1676,6 +1679,7 @@ unsafe fn public_window_callback_inner(
                     device_id: DEVICE_ID,
                     delta: LineDelta(value, 0.0),
                     phase: TouchPhase::Moved,
+                    momentum_phase: MomentumPhase::None
                 },
             });
 
